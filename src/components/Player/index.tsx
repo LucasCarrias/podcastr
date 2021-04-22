@@ -14,7 +14,8 @@ export default function Player() {
         episodeList,
         currentEpisodeIndex,
         isPlaying,
-        togglePlay
+        togglePlay,
+        setPlayingState
     } = useContext(PlayerContext);
 
     const episode = episodeList[currentEpisodeIndex];
@@ -79,7 +80,9 @@ export default function Player() {
                     <audio 
                     ref={audioRef}
                     src={episode.url}
-                    autoPlay />
+                    autoPlay
+                    onPlay={() => setPlayingState(true)}
+                    onPause={() => setPlayingState(false)} />
                 ) }
 
                 <div className={styles.buttons}>
