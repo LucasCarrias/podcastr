@@ -4,7 +4,7 @@ import Slider from 'rc-slider';
 
 import 'rc-slider/assets/index.css';
 
-import { PlayerContext } from '../../contexts/PlayerContext';
+import { PlayerContext, usePlayer } from '../../contexts/PlayerContext';
 import styles from './styles.module.scss';
 
 export default function Player() {
@@ -18,7 +18,9 @@ export default function Player() {
         setPlayingState,
         playNext,
         playPrevious,
-    } = useContext(PlayerContext);
+        hasNext,
+        hasPrevious
+    } = usePlayer();
 
     const episode = episodeList[currentEpisodeIndex];
 
@@ -91,7 +93,7 @@ export default function Player() {
                     <button type="button" disabled={!episode}>
                         <img src="/shuffle.svg" alt="Embaralhar"/>
                     </button>
-                    <button type="button" disabled={!episode} onClick={playPrevious}>
+                    <button type="button" disabled={!episode || !hasPrevious} onClick={playPrevious}>
                         <img src="/play-previous.svg" alt="Tocar anterior"/>
                     </button>
 
@@ -107,8 +109,8 @@ export default function Player() {
                         )}
                     </button>
 
-                    <button type="button" disabled={!episode}>
-                        <img src="/play-next.svg" alt="Tocar próxima" onClick={playNext}/>
+                    <button type="button" disabled={!episode || !hasNext} onClick={playNext}>
+                        <img src="/play-next.svg" alt="Tocar próxima"/>
                     </button>
                     <button type="button" disabled={!episode}>
                         <img src="/repeat.svg" alt="Repetir"/>
